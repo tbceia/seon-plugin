@@ -1,0 +1,34 @@
+{
+  "name": "cordova-plugin-seonplugin",
+  "version": "0.0.1",
+  "description": "An Android Cordova plugin that collects device fingerprint.",
+  "cordova": {
+    "id": "cordova-plugin-seonplugin",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tbceia/seon-plugin.git"
+  },
+  "keywords": [
+    "Device",
+    "Seon",
+    "Fingerprint",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "author": "Tiago Ceia <tiago.ceia@igh.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tbceia/seon-plugin/issues"
+  },
+  "homepage": "https://github.com/tbceia/seon-plugin/"
+}
