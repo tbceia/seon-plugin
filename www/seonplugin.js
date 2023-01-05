@@ -10,7 +10,7 @@ SeonPlugin.prototype.show = function(message, duration, successCallback, errorCa
   cordova.exec(successCallback, errorCallback, 'SeonPlugin', 'show', [options]);
 }
 
-// Installation constructor that binds ToastyPlugin to window
+// Installation constructor that binds SeonPlugin to window
 SeonPlugin.install = function() {
   if (!window.plugins) {
     window.plugins = {};
