@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-seonplugin" version="0.0.1">
+    <name>SeonPlugin</name>
+
+    <description>An Android Cordova plugin that collects device fingerprint</description>
+    <license>MIT</license>
+
+    <keywords>cordova,android,seon,device,fingerprint</keywords>
+    <repo>https://github.com/tbceia/seon-plugin</repo>
+    <issue>https://github.com/tbceia/seon-plugin/issues</issue>
+  
+    <engines>
+        <engine name="cordova" version=">=3.0.0"/>
+    </engines>
+  
+    <js-module src="www/seonplugin.js" name="seonPlugin">
+        <clobbers target="window.plugins.seonPlugin" />
+    </js-module>
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="SeonPlugin">
+                <param name="android-package" value="com.igh.cordova.plugin.SeonPlugin"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/SeonPlugin.java" target-dir="src/com/igh/cordova/plugin" />
+    </platform>
+</plugin>
