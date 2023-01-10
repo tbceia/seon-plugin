@@ -26,5 +26,8 @@
         </config-file>
 
         <source-file src="src/android/SeonPlugin.java" target-dir="src/com/igh/cordova/plugin" />
+            
+        <framework src="build.gradle" custom="true" type="gradleReference" />            
+            
     </platform>
 </plugin>
