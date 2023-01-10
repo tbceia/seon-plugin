@@ -9,7 +9,8 @@ import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import io.seon.androidsdk.service.*;
+import io.seon.androidsdk.service.Seon;
+import io.seon.androidsdk.service.SeonBuilder;
 
 public class SeonPlugin extends CordovaPlugin {
 
