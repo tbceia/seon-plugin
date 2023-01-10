@@ -1,6 +1,5 @@
 package com.igh.cordova.plugin;
 // The native APIs
-//import android.widget.Toast;
 import android.content.Context;
 // Cordova-required packages
 import org.apache.cordova.CallbackContext;
@@ -9,6 +8,7 @@ import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+//Seon classes
 import io.seon.androidsdk.service.Seon;
 import io.seon.androidsdk.service.SeonBuilder;
 
@@ -59,26 +59,17 @@ public class SeonPlugin extends CordovaPlugin {
 					e.printStackTrace();
 				}
 
-				PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "init");
-				pluginResult.setKeepCallback(true);
-				callbackContext.sendPluginResult(pluginResult);
+				//PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "init");
+				//pluginResult.setKeepCallback(true);
+				//callbackContext.sendPluginResult(pluginResult);
 				//callbackContext.success(); // Thread-safe.
 			}
 		});
-
-        /*String message = "Feels toasty in here!";
-
-        // Create the toast
-        Toast toast = Toast.makeText(cordova.getActivity(), message, Toast.LENGTH_LONG);
-        // Display toast
-        toast.show();*/
 
         return true;
     }
 
     private void fingerprintCallback(String base64String) {
-        System.out.println("BASE -> " + base64String);
-
         // Send a positive result to the callbackContext
         PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, base64String);
         callbackContext.sendPluginResult(pluginResult);
