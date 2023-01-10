@@ -147,10 +147,10 @@ def computeBuildTargetName(debugBuild) {
 }
 
 // Make cdvBuild a task that depends on the debug/arch-sepecific task.
-task cdvBuildDebug
-cdvBuildDebug.dependsOn {
-    return computeBuildTargetName(true)
-}
+//task cdvBuildDebug
+//cdvBuildDebug.dependsOn {
+//    return computeBuildTargetName(true)
+//}
 
 task cdvBuildRelease
 cdvBuildRelease.dependsOn {
