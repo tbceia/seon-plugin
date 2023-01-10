@@ -17,17 +17,16 @@ public class SeonPlugin extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) {
-        // Verify that the user sent a 'show' action
 		
 		this.callbackContext = callbackContext;
 
-        if (!action.equals("getDeviceFingerprint")) {
-            callbackContext.error("\"" + action + "\" is not a recognized action.");
-            return false;
-        }
-		
+		if (!action.equals("getDeviceFingerprint")) {
+			callbackContext.error("\"" + action + "\" is not a recognized action.");
+			return false;
+		}
+			
 		Context context = this.cordova.getActivity().getApplicationContext();
-		
+
 		final String sessionId;
 		try {
 			JSONObject options = args.getJSONObject(0);
@@ -36,40 +35,35 @@ public class SeonPlugin extends CordovaPlugin {
 			callbackContext.error("Error encountered: " + e.getMessage());
 			return false;
 		}
-		
+
 		if(sessionId.length() == 0 || sessionId == null){
 			callbackContext.error("Error encountered: Session Id is mandatory");
 			return false;
 		}
-					
+
 		cordova.getThreadPool().execute(new Runnable() {
 			public void run() {
 				try {
 					// Build with parameters
-					Seon seonFingerprint = new SeonBuilder()
-						.withContext(context)
-						.withSessionId(sessionId)
-						.build();
+					Seon seonFingerprint = new SeonBuilder().withContext(context).withSessionId(sessionId).build();
 
 					// Enable logging
 					seonFingerprint.setLoggingEnabled(true);
-					
-					
+
 					seonFingerprint.getFingerprintBase64(fingerprint->{
 						//set seonFingerprint as the value for the session property of the fraud API request.
 						fingerprintCallback(fingerprint);
 					});
-					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				
+
 				PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "init");
 				pluginResult.setKeepCallback(true);
 				callbackContext.sendPluginResult(pluginResult);
 				//callbackContext.success(); // Thread-safe.
 			}
-        });
+		});
 
         /*String message = "Feels toasty in here!";
 
