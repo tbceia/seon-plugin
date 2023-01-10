@@ -1,6 +1,7 @@
 package com.igh.cordova.plugin;
-// The native Toast API
-import android.widget.Toast;
+// The native APIs
+//import android.widget.Toast;
+import android.content.Context;
 // Cordova-required packages
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -8,34 +9,83 @@ import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import io.seon.androidsdk.service.*;
+
 public class SeonPlugin extends CordovaPlugin {
-  private static final String DURATION_LONG = "long";
-  @Override
-  public boolean execute(String action, JSONArray args,
-    final CallbackContext callbackContext) {
-      // Verify that the user sent a 'show' action
-      if (!action.equals("show")) {
-        callbackContext.error("\"" + action + "\" is not a recognized action.");
-        return false;
-      }
-      String message;
-      String duration;
-      try {
-        JSONObject options = args.getJSONObject(0);
-        message = options.getString("message");
-        duration = options.getString("duration");
-      } catch (JSONException e) {
-        callbackContext.error("Error encountered: " + e.getMessage());
-        return false;
-      }
-      // Create the toast
-      Toast toast = Toast.makeText(cordova.getActivity(), message,
-        DURATION_LONG.equals(duration) ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
-      // Display toast
-      toast.show();
-      // Send a positive result to the callbackContext
-      PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
-      callbackContext.sendPluginResult(pluginResult);
-      return true;
-  }
+
+    private CallbackContext callbackContext;
+
+    @Override
+    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) {
+        // Verify that the user sent a 'show' action
+		
+		this.callbackContext = callbackContext;
+
+        if (!action.equals("getDeviceFingerprint")) {
+            callbackContext.error("\"" + action + "\" is not a recognized action.");
+            return false;
+        }
+		
+		Context context = this.cordova.getActivity().getApplicationContext();
+		
+		final String sessionId;
+		try {
+			JSONObject options = args.getJSONObject(0);
+			sessionId = options.getString("sessionId");
+		} catch (JSONException e) {
+			callbackContext.error("Error encountered: " + e.getMessage());
+			return false;
+		}
+		
+		if(sessionId.length() == 0 || sessionId == null){
+			callbackContext.error("Error encountered: Session Id is mandatory");
+			return false;
+		}
+					
+		cordova.getThreadPool().execute(new Runnable() {
+			public void run() {
+				try {
+					// Build with parameters
+					Seon seonFingerprint = new SeonBuilder()
+						.withContext(context)
+						.withSessionId(sessionId)
+						.build();
+
+					// Enable logging
+					seonFingerprint.setLoggingEnabled(true);
+					
+					
+					seonFingerprint.getFingerprintBase64(fingerprint->{
+						//set seonFingerprint as the value for the session property of the fraud API request.
+						fingerprintCallback(fingerprint);
+					});
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "init");
+				pluginResult.setKeepCallback(true);
+				callbackContext.sendPluginResult(pluginResult);
+				//callbackContext.success(); // Thread-safe.
+			}
+        });
+
+        /*String message = "Feels toasty in here!";
+
+        // Create the toast
+        Toast toast = Toast.makeText(cordova.getActivity(), message, Toast.LENGTH_LONG);
+        // Display toast
+        toast.show();*/
+
+        return true;
+    }
+
+    private void fingerprintCallback(String base64String) {
+        System.out.println("BASE -> " + base64String);
+
+        // Send a positive result to the callbackContext
+        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, base64String);
+        callbackContext.sendPluginResult(pluginResult);
+    }
 }
