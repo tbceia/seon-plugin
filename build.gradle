@@ -17,7 +17,7 @@
        under the License.
 */
 
-apply plugin: 'com.android.application'
+//apply plugin: 'com.android.application'
 
 buildscript {
     apply from: 'repositories.gradle'
@@ -26,8 +26,8 @@ buildscript {
 
 android {
     defaultConfig {
-        versionCode cdvVersionCode ?: new BigInteger("" + privateHelpers.extractIntFromManifest("versionCode"))
-        applicationId privateHelpers.extractStringFromManifest("package")
+        //versionCode cdvVersionCode ?: new BigInteger("" + privateHelpers.extractIntFromManifest("versionCode"))
+        //applicationId privateHelpers.extractStringFromManifest("package")
 
         minSdkVersion 22
         targetSdkVersion 33
@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: '*.jar')
+    //implementation fileTree(dir: 'libs', include: '*.jar')
 	implementation('io.seon.androidsdk:androidsdk:5.0.0') {
 			transitive = true
 	}
