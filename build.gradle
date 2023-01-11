@@ -19,24 +19,30 @@
 
 apply plugin: 'com.android.application'
 
+
+/*
 if (cordovaConfig.IS_GRADLE_PLUGIN_KOTLIN_ENABLED) {
     apply plugin: 'kotlin-android'
     apply plugin: 'kotlin-android-extensions'
 }
+*/
 
 buildscript {
     apply from: '../CordovaLib/cordova.gradle'
 
     // Checks if the kotlin version format is valid.
+    /*
     if(cordovaConfig.IS_GRADLE_PLUGIN_KOTLIN_ENABLED) {
         if(!cdvHelpers.isVersionValid(cordovaConfig.KOTLIN_VERSION)) {
             throw new GradleException("The defined Kotlin version (${cordovaConfig.KOTLIN_VERSION}) does not appear to be a valid version.")
         }
     }
+    */
 
     apply from: 'repositories.gradle'
     repositories repos
-
+    
+    /*
     dependencies {
         classpath "com.android.tools.build:gradle:${cordovaConfig.AGP_VERSION}"
 
@@ -56,6 +62,7 @@ buildscript {
             classpath gradlePluginGoogleServicesClassPath
         }
     }
+    */
 }
 
 // Allow plugins to declare Maven dependencies via build-extras.gradle.
@@ -70,12 +77,15 @@ allprojects {
     repositories repos
 }
 
-//task wrapper(type: Wrapper) {
-//    gradleVersion = cordovaConfig.GRADLE_VERSION
-//}
+/*
+task wrapper(type: Wrapper) {
+    gradleVersion = cordovaConfig.GRADLE_VERSION
+}
+*/
 
 // Configuration properties. Set these via environment variables, build-extras.gradle, or gradle.properties.
 // Refer to: http://www.gradle.org/docs/current/userguide/tutorial_this_and_that.html
+/*
 ext {
     apply from: '../CordovaLib/cordova.gradle'
 
@@ -107,10 +117,12 @@ ext {
     // Plugin gradle extensions can append to this to have code run at the end.
     cdvPluginPostBuildExtras = []
 }
+*/
 
 // PLUGIN GRADLE EXTENSIONS START
 // PLUGIN GRADLE EXTENSIONS END
 
+/*
 def hasBuildExtras1 = file('build-extras.gradle').exists()
 if (hasBuildExtras1) {
     apply from: 'build-extras.gradle'
@@ -120,23 +132,31 @@ def hasBuildExtras2 = file('../build-extras.gradle').exists()
 if (hasBuildExtras2) {
     apply from: '../build-extras.gradle'
 }
+*/
 
 // Apply updates that might come from build-extra.
+/*
 privateHelpers.applyCordovaConfigCustomization()
+*/
 
 // Set property defaults after extension .gradle files.
+/*
 if (ext.cdvDebugSigningPropertiesFile == null && file('../debug-signing.properties').exists()) {
     ext.cdvDebugSigningPropertiesFile = '../debug-signing.properties'
 }
 if (ext.cdvReleaseSigningPropertiesFile == null && file('../release-signing.properties').exists()) {
     ext.cdvReleaseSigningPropertiesFile = '../release-signing.properties'
 }
+*/
 
 // Cast to appropriate types.
+/*
 ext.cdvBuildMultipleApks = cdvBuildMultipleApks == null ? false : cdvBuildMultipleApks.toBoolean();
 ext.cdvVersionCodeForceAbiDigit = cdvVersionCodeForceAbiDigit == null ? false : cdvVersionCodeForceAbiDigit.toBoolean();
 ext.cdvVersionCode = cdvVersionCode == null ? null : Integer.parseInt('' + cdvVersionCode)
+*/
 
+/*
 def computeBuildTargetName(debugBuild) {
     def ret = 'assemble'
     if (cdvBuildMultipleApks && cdvBuildArch) {
@@ -145,38 +165,45 @@ def computeBuildTargetName(debugBuild) {
     }
     return ret + (debugBuild ? 'Debug' : 'Release')
 }
+*/
 
 // Make cdvBuild a task that depends on the debug/arch-sepecific task.
-//task cdvBuildDebug
-//cdvBuildDebug.dependsOn {
-//    return computeBuildTargetName(true)
-//}
+/*
+task cdvBuildDebug
+cdvBuildDebug.dependsOn {
+    return computeBuildTargetName(true)
+}
+*/
 
-//task cdvBuildRelease
-//cdvBuildRelease.dependsOn {
-//    return computeBuildTargetName(false)
-//}
+/*
+task cdvBuildRelease
+cdvBuildRelease.dependsOn {
+    return computeBuildTargetName(false)
+}
+*/
 
-//task cdvPrintProps {
-//    doLast {
-//        println('cdvBuildToolsVersion=' + cdvBuildToolsVersion)
-//        println('cdvVersionCode=' + cdvVersionCode)
-//        println('cdvVersionCodeForceAbiDigit=' + cdvVersionCodeForceAbiDigit)
-//        println('cdvSdkVersion=' + cdvSdkVersion)
-//        println('cdvMinSdkVersion=' + cdvMinSdkVersion)
-//        println('cdvMaxSdkVersion=' + cdvMaxSdkVersion)
-//        println('cdvBuildMultipleApks=' + cdvBuildMultipleApks)
-//        println('cdvReleaseSigningPropertiesFile=' + cdvReleaseSigningPropertiesFile)
-//        println('cdvDebugSigningPropertiesFile=' + cdvDebugSigningPropertiesFile)
-//        println('cdvBuildArch=' + cdvBuildArch)
-//        println('computedVersionCode=' + android.defaultConfig.versionCode)
-//        println('cdvAndroidXAppCompatVersion=' + cdvAndroidXAppCompatVersion)
-//        println('cdvAndroidXWebKitVersion=' + cdvAndroidXWebKitVersion)
-//        android.productFlavors.each { flavor ->
-//            println('computed' + flavor.name.capitalize() + 'VersionCode=' + flavor.versionCode)
-//        }
-//    }
-//}
+/*
+task cdvPrintProps {
+    doLast {
+        println('cdvBuildToolsVersion=' + cdvBuildToolsVersion)
+        println('cdvVersionCode=' + cdvVersionCode)
+        println('cdvVersionCodeForceAbiDigit=' + cdvVersionCodeForceAbiDigit)
+        println('cdvSdkVersion=' + cdvSdkVersion)
+        println('cdvMinSdkVersion=' + cdvMinSdkVersion)
+        println('cdvMaxSdkVersion=' + cdvMaxSdkVersion)
+        println('cdvBuildMultipleApks=' + cdvBuildMultipleApks)
+        println('cdvReleaseSigningPropertiesFile=' + cdvReleaseSigningPropertiesFile)
+        println('cdvDebugSigningPropertiesFile=' + cdvDebugSigningPropertiesFile)
+        println('cdvBuildArch=' + cdvBuildArch)
+        println('computedVersionCode=' + android.defaultConfig.versionCode)
+        println('cdvAndroidXAppCompatVersion=' + cdvAndroidXAppCompatVersion)
+        println('cdvAndroidXWebKitVersion=' + cdvAndroidXWebKitVersion)
+        android.productFlavors.each { flavor ->
+            println('computed' + flavor.name.capitalize() + 'VersionCode=' + flavor.versionCode)
+        }
+    }
+}
+*/
 
 android {
     defaultConfig {
@@ -199,7 +226,8 @@ android {
     // Android Manifest by 10 and add a number for each architecture.
     // If you are not using Crosswalk or SQLite, you can
     // ignore this chunk of code, and your version codes will be respected.
-
+    
+    /*
     if (Boolean.valueOf(cdvBuildMultipleApks)) {
         flavorDimensions "default"
 
@@ -241,12 +269,14 @@ android {
             versionCode defaultConfig.versionCode*10
         }
     }
+    */
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
+	
+    /*
     if (cdvReleaseSigningPropertiesFile) {
         signingConfigs {
             release {
@@ -264,7 +294,9 @@ android {
         }
         addSigningProps(cdvReleaseSigningPropertiesFile, signingConfigs.release)
     }
-
+    */
+    
+    /*
     if (cdvDebugSigningPropertiesFile) {
         addSigningProps(cdvDebugSigningPropertiesFile, signingConfigs.debug)
     }
@@ -272,6 +304,7 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+    */
 }
 
 /*
