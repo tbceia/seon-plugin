@@ -24,6 +24,15 @@
                 <param name="android-package" value="com.igh.cordova.plugin.SeonPlugin"/>
             </feature>
         </config-file>
+            
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+        </config-file>
 
         <source-file src="src/android/SeonPlugin.java" target-dir="src/com/igh/cordova/plugin" />
             
